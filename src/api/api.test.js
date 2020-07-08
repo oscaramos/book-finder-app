@@ -1,33 +1,14 @@
-const books = require('google-books-search')
+import { bookSearch } from './api'
 
-import * as R from 'ramda'
-
-const promiseBooksSearch = (title) => new Promise((resolve, reject) => {
-	books.search(title, (error, results) => {
-		if (!error) {
-			resolve(results)
-		} else {
-			reject(error)
-		}
-	})
-})
-
-const renameKeys = R.curry((keysMap, obj) =>
-	R.reduce((acc, key) => R.assoc(keysMap[key] || key, obj[key], acc), {}, R.keys(obj))
-)
-
-const authorLens = R.lens(R.prop('authors'), R.assoc('authors'))
-
-const getRelevantData = R.map(
-	R.pipe(
-		R.over(authorLens, R.head),
-		renameKeys({ authors: 'author' }),
-		R.pick(['title', 'author', 'publisher']),
-	)
-)
-
-it('Test', () => {
-	return promiseBooksSearch('Professional JavaScript for Web Developers')
-		.then(getRelevantData)
-		.then(console.log)
+it('Should return list of books ', () => {
+	return bookSearch('Professional JavaScript for Web Developers')
+		.then(books => {
+			expect(books.length).toBe(10)
+			books.map(book => {
+				console.log(book)
+				expect(book.title).toBeDefined()
+				expect(book.author).toBeDefined()
+				expect(book.publisher).toBeDefined()
+			})
+		})
 })
