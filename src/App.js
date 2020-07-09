@@ -71,7 +71,7 @@ function App() {
 	return (
 		<>
 			<AppBar position='fixed' className={classes.appbar} variant='outlined'>
-				<TextField label='Book title'
+				<TextField label='Título'
 					variant='outlined'
 					className={classes.inputTitle}
 					value={title}
