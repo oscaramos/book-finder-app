@@ -23,10 +23,7 @@ const getRelevantData = R.map(
 	R.pipe(
 		chooseOnlyFirstAuthor,
 		renameKeys({ authors: 'author' }),
-		R.pick(['title', 'author', 'publisher']),
-		setDefaultProperty('title', '-----'),
-		setDefaultProperty('author', '-----'),
-		setDefaultProperty('publisher', '-----')
+		R.pick(['title', 'author', 'publisher', 'thumbnail'])
 	)
 )
 
