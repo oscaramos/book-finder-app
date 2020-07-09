@@ -45,25 +45,16 @@ function App() {
 	const classes = useStyles()
 	const [title, setTitle] = useState('Professional JavaScript for Web Developers')
 	const [cardInfos, setCardInfos] = useState([])
-	const [loadingBooks, setLoadingBooks] = useState(false)
 
 	useEffect(() => {
-		onStopTyping(150, () => {
+		onStopTyping(200, () => {
 			if (title) {
 				console.log(title)
-				setLoadingBooks(true)
 				bookSearch(title)
 					.then(books => setCardInfos(books))
-					.then(() => setLoadingBooks(false))
 			}
 		})
 	}, [title])
-
-	// Start displaying info fast
-	useEffect(() => {
-		bookSearch(title)
-			.then(books => setCardInfos(books))
-	}, [])
 
 	const theme = useTheme()
 	const matchXS = useMediaQuery(theme.breakpoints.down('xs'))
@@ -84,7 +75,7 @@ function App() {
 					{
 						cardInfos.map((cardInfo, index) =>
 							<Grid item key={index}>
-								<BookCard cardInfo={cardInfo} loadingBooks={loadingBooks}/>
+								<BookCard cardInfo={cardInfo} />
 							</Grid>
 						)
 					}

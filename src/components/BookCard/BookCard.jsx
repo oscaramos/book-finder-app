@@ -41,18 +41,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-export function BookCard({ cardInfo, loading }) {
+export function BookCard({ cardInfo }) {
 	const classes = useStyles()
 
 	const { author, publisher, title, thumbnail } = cardInfo
-
-	if(loading) {
-		return (
-			<div>
-				loading...
-			</div>
-		)
-	}
 
 	return (
 		<Card variant='outlined' className={classes.cardContainer}>
