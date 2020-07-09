@@ -11,6 +11,8 @@ import { bookSearch } from './api/api'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useMediaQuery } from '@material-ui/core'
 
+import onstop from 'onstop'
+
 
 const useStyles = makeStyles((theme) => ({
 	'@global': {
@@ -41,18 +43,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
+const onStopTyping = (time, fn) => onstop(time, fn)()
+
 function App() {
 	const classes = useStyles()
 	const [title, setTitle] = useState('Professional JavaScript for Web Developers')
 	const [cardInfos, setCardInfos] = useState([])
 
 	useEffect(() => {
-		if (title) {
-			bookSearch(title)
-				.then(books => {
-					setCardInfos(books)
-				})
-		}
+		// When the user stop typing an interval of time
+		onStopTyping(1500, () => {
+			if (title) {
+				bookSearch(title)
+					.then(books => setCardInfos(books))
+			}
+		})
 	}, [title])
 
 	const theme = useTheme()
@@ -65,7 +70,7 @@ function App() {
 					variant='outlined'
 					className={classes.inputTitle}
 					value={title}
-					onChange={(e) => setTitle(e.target.value)}
+					onChange={e => setTitle(e.target.value)}
 				/>
 			</AppBar>
 			<div className={classes.bottomSeparation} />
