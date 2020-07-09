@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	thumbnailImage: {
 		width: '8em',
-		height: '9em',
+		height: '11em',
 		margin: 'auto',
 		[theme.breakpoints.down('xs')]: {
 			width: '6em',
-			height: '7em',
+			height: '9em',
 		}
 	},
 	title: {
