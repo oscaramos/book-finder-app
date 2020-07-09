@@ -31,39 +31,27 @@ const useStyles = makeStyles(() => ({
 
 function App() {
 	const classes = useStyles()
-	const [cardInfos, setCardInfos] = useState([{
-		title: 'Professional JavaScript for Web Developers',
-		author: 'Nicholas C. Zakas',
-		publisher: 'John Wiley & Sons',
-		thumbnail: 'http://books.google.com/books/content?id=C3kabcBG0ZsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
-	},
-	{
-		title: 'Professional JavaScript for Web Developers',
-		author: 'Nicholas C. Zakas',
-		publisher: 'John Wiley & Sons',
-		thumbnail: 'http://books.google.com/books/content?id=Wmfr1Zp7d5EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
-	},
-	{
-		title: 'Professional JavaScript for Web Developers',
-		author: 'Matt Frisbie',
-		publisher: 'John Wiley & Sons',
-		thumbnail: 'http://books.google.com/books/content?id=3GOuDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
-	}
-	])
+	const [title, setTitle] = useState('Professional JavaScript for Web Developers')
+	const [cardInfos, setCardInfos] = useState([])
 
 	useEffect(() => {
-		bookSearch('Professional JavaScript for Web Developers')
-			.then(books => {
-				setCardInfos(books)
-			})
-	}, [])
+		if (title) {
+			bookSearch(title)
+				.then(books => {
+					setCardInfos(books)
+				})
+		}
+	}, [title])
 
 	return (
 		<>
 			<AppBar position='fixed' className={classes.appbar} variant='outlined'>
 				<TextField label='Book title'
 					variant='outlined'
-					className={classes.inputTitle} />
+					className={classes.inputTitle}
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
 			</AppBar>
 			<div className={classes.bottomSeparation} />
 			<Container maxWidth='xs'>

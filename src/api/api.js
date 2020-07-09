@@ -9,16 +9,6 @@ const authorLens = R.lens(R.prop('authors'), R.assoc('authors'))
 
 const chooseOnlyFirstAuthor = R.over(authorLens, R.head)
 
-const nothing = () => {}
-
-function setDefaultProperty(prop, defaultValue) {
-	return R.ifElse(
-		R.has(prop),
-		R.tap(nothing),
-		R.assoc(prop, defaultValue),
-	)
-}
-
 const getRelevantData = R.map(
 	R.pipe(
 		chooseOnlyFirstAuthor,
