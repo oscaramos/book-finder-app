@@ -1,5 +1,6 @@
+let timeout
+
 function debounce(func, wait, immediate) {
-	let timeout
 	return function () {
 		let context = this, args = arguments
 		clearTimeout(timeout)
@@ -11,6 +12,8 @@ function debounce(func, wait, immediate) {
 	}
 }
 
-export const onStopTyping = (time, fn) => {
+function onStopTyping(time, fn) {
 	return debounce(fn, time)()
 }
+
+export default onStopTyping

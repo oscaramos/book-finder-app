@@ -10,7 +10,7 @@ import { BookCard } from './components/BookCard/BookCard'
 import { bookSearch } from './api/api'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useMediaQuery } from '@material-ui/core'
-import { onStopTyping } from './utils/onStopTyping'
+import onStopTyping from './utils/onStopTyping'
 
 const useStyles = makeStyles((theme) => ({
 	'@global': {
@@ -48,8 +48,9 @@ function App() {
 	const [loadingBooks, setLoadingBooks] = useState(false)
 
 	useEffect(() => {
-		onStopTyping(500, () => {
+		onStopTyping(1000, () => {
 			if (title) {
+				console.log(title)
 				setLoadingBooks(true)
 				bookSearch(title)
 					.then(books => setCardInfos(books))
