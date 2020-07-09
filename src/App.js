@@ -11,9 +11,6 @@ import { bookSearch } from './api/api'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useMediaQuery } from '@material-ui/core'
 
-import onstop from 'onstop'
-
-
 const useStyles = makeStyles((theme) => ({
 	'@global': {
 		html: {
@@ -43,7 +40,22 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-const onStopTyping = (time, fn) => onstop(time, fn)()
+const onStopTyping = (time, fn) => {
+	function debounce(func, wait, immediate) {
+		let timeout
+		return function () {
+			let context = this, args = arguments
+			clearTimeout(timeout)
+			timeout = setTimeout(function () {
+				timeout = null
+				if (!immediate) func.apply(context, args)
+			}, wait)
+			if (immediate && !timeout) func.apply(context, args)
+		}
+	}
+
+	return debounce(fn, time)()
+}
 
 function App() {
 	const classes = useStyles()
@@ -52,7 +64,8 @@ function App() {
 
 	useEffect(() => {
 		// When the user stop typing an interval of time
-		onStopTyping(1500, () => {
+		onStopTyping(3000, () => {
+			console.log('calling')
 			if (title) {
 				bookSearch(title)
 					.then(books => setCardInfos(books))
