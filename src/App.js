@@ -2,13 +2,10 @@ import React, { useState } from 'react'
 
 import AppBar from '@material-ui/core/AppBar'
 import TextField from '@material-ui/core/TextField'
-import Card from '@material-ui/core/Card'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
+import { BookCard } from './components/BookCard/BookCard'
 
 // import { bookSearch } from './api/api'
 
@@ -22,10 +19,6 @@ const useStyles = makeStyles(theme => ({
 		height: '5em',
 		backgroundColor: 'white'
 	},
-	cardContainer: {
-		paddingTop: '1em',
-		paddingBottom: '1em',
-	},
 	bottomSeparation: {
 		height: '6em',
 	},
@@ -33,11 +26,6 @@ const useStyles = makeStyles(theme => ({
 		width: '20em',
 		margin: 'auto'
 	},
-	thumbnailImage: {
-		width: '6em',
-		height: '8em',
-		margin: 'auto'
-	}
 }))
 
 function App() {
@@ -72,40 +60,10 @@ function App() {
 			<div className={classes.bottomSeparation} />
 			<Container maxWidth='xs'>
 				{
-					cardInfos.map(cardInfo => (
-						<Card variant='outlined' className={classes.cardContainer}>
-							<Grid container direction='row'>
-								<Grid item xs={4}>
-									<CardMedia
-										image={cardInfo.thumbnail}
-										title='thumbnail'
-										className={classes.thumbnailImage}
-									/>
-								</Grid>
-								<Grid item xs={8}>
-									<Grid container direction='column' justify='center' style={{ height: '100%' }}>
-										<Grid item>
-											<Typography style={{ fontSize: '1rem' }}>
-												{cardInfo.title}
-											</Typography>
-										</Grid>
-										<Grid item>
-											<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-												{cardInfo.author}
-											</Typography>
-										</Grid>
-										<Grid item>
-											<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-												{cardInfo.publisher}
-											</Typography>
-										</Grid>
-									</Grid>
-								</Grid>
-							</Grid>
-						</Card>
-					))
+					cardInfos.map((cardInfo, index) =>
+						<BookCard key={index} cardInfo={cardInfo} />
+					)
 				}
-
 			</Container>
 		</>
 	)
