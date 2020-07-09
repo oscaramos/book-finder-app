@@ -11,19 +11,26 @@ const chooseOnlyFirstAuthor = R.over(authorLens, R.head)
 
 const nothing = () => {}
 
-function setDefaultProperty(prop, defaultValue) {
-	return R.ifElse(
-		R.has(prop),
+const isNotNilProp = (prop) =>
+	R.both(R.has(prop),
+		R.pipe(
+			R.prop(prop),
+			R.isNil, // null or undefined
+			R.not,
+		))
+
+const setDefaultProperty = (prop, defaultValue) =>
+	R.ifElse(
+		isNotNilProp(prop),
 		R.tap(nothing),
 		R.assoc(prop, defaultValue),
 	)
-}
 
 const setDefaultProperties = R.pipe(
 	setDefaultProperty('title', 'No title'),
 	setDefaultProperty('authors', ['anonymous']),
 	setDefaultProperty('publisher', 'No publisher'),
-	setDefaultProperty('thumbnail', ''),
+	setDefaultProperty('thumbnail', 'https://i.imgur.com/J5LVHEL.jpg'), // No Book Cover Available
 )
 
 const getRelevantData = R.map(
@@ -31,7 +38,7 @@ const getRelevantData = R.map(
 		setDefaultProperties,
 		chooseOnlyFirstAuthor,
 		renameKeys({ authors: 'author' }),
-		R.pick(['title', 'author', 'publisher', 'thumbnail'])
+		R.pick(['title', 'author', 'publisher', 'thumbnail']),
 	)
 )
 

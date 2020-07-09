@@ -48,7 +48,7 @@ function App() {
 	const [loadingBooks, setLoadingBooks] = useState(false)
 
 	useEffect(() => {
-		onStopTyping(1000, () => {
+		onStopTyping(150, () => {
 			if (title) {
 				console.log(title)
 				setLoadingBooks(true)
