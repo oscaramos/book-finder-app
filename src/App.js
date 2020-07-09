@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { BookCard } from './components/BookCard/BookCard'
+import Grid from '@material-ui/core/Grid'
 
 // import { bookSearch } from './api/api'
 
@@ -59,11 +60,15 @@ function App() {
 			</AppBar>
 			<div className={classes.bottomSeparation} />
 			<Container maxWidth='xs'>
-				{
-					cardInfos.map((cardInfo, index) =>
-						<BookCard key={index} cardInfo={cardInfo} />
-					)
-				}
+				<Grid container direction='column' spacing={2}>
+					{
+						cardInfos.map((cardInfo, index) =>
+							<Grid item key={index}>
+								<BookCard cardInfo={cardInfo} />
+							</Grid>
+						)
+					}
+				</Grid>
 			</Container>
 		</>
 	)
