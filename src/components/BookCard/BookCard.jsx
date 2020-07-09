@@ -17,15 +17,17 @@ const useStyles = makeStyles(() => ({
 	}
 }))
 
-export function BookCard(props) {
+export function BookCard({ cardInfo }) {
 	const classes = useStyles()
+
+	const { author, publisher, title, thumbnail } = cardInfo
 
 	return (
 		<Card variant='outlined' className={classes.cardContainer}>
 			<Grid container direction='row'>
 				<Grid item xs={4}>
 					<CardMedia
-						image={props.cardInfo.thumbnail}
+						image={thumbnail}
 						title='thumbnail'
 						className={classes.thumbnailImage}
 					/>
@@ -34,17 +36,17 @@ export function BookCard(props) {
 					<Grid container direction='column' justify='center' style={{ height: '100%' }}>
 						<Grid item>
 							<Typography style={{ fontSize: '1rem' }}>
-								{props.cardInfo.title}
+								{title}
 							</Typography>
 						</Grid>
 						<Grid item>
 							<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-								{props.cardInfo.author}
+								{author}
 							</Typography>
 						</Grid>
 						<Grid item>
 							<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-								{props.cardInfo.publisher}
+								{publisher}
 							</Typography>
 						</Grid>
 					</Grid>

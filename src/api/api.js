@@ -1,4 +1,4 @@
-const books = require('google-books-search')
+import books from 'google-books-search'
 import * as R from 'ramda'
 
 const renameKeys = R.curry((keysMap, obj) =>

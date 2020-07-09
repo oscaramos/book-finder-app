@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import AppBar from '@material-ui/core/AppBar'
 import TextField from '@material-ui/core/TextField'
-
-import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { BookCard } from './components/BookCard/BookCard'
 import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import { BookCard } from './components/BookCard/BookCard'
 
-// import { bookSearch } from './api/api'
+import { bookSearch } from './api/api'
 
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles(() => ({
 	'@global': {
 		html: {
 			backgroundColor: '#eeeeef'
@@ -50,6 +50,13 @@ function App() {
 		thumbnail: 'http://books.google.com/books/content?id=3GOuDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
 	}
 	])
+
+	useEffect(() => {
+		bookSearch('Professional JavaScript for Web Developers')
+			.then(books => {
+				setCardInfos(books)
+			})
+	}, [])
 
 	return (
 		<>
