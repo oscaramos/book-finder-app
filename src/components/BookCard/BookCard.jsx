@@ -5,16 +5,40 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	cardContainer: {
-		paddingTop: '1em',
-		paddingBottom: '1em',
+		padding: '1em',
+		[theme.breakpoints.down('xs')]: {
+			width: '100%'
+		}
 	},
 	thumbnailImage: {
-		width: '6em',
-		height: '8em',
-		margin: 'auto'
-	}
+		width: '8em',
+		height: '9em',
+		margin: 'auto',
+		[theme.breakpoints.down('xs')]: {
+			width: '6em',
+			height: '7em',
+		}
+	},
+	title: {
+		fontSize: '1.10rem',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '1.00rem',
+		}
+	},
+	author: {
+		fontSize: '0.85em',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '0.75em',
+		}
+	},
+	publisher: {
+		fontSize: '0.85em',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '0.75em',
+		}
+	},
 }))
 
 export function BookCard({ cardInfo }) {
@@ -35,17 +59,17 @@ export function BookCard({ cardInfo }) {
 				<Grid item xs={8}>
 					<Grid container direction='column' justify='center' style={{ height: '100%' }}>
 						<Grid item>
-							<Typography style={{ fontSize: '1rem' }}>
+							<Typography className={classes.title}>
 								{title}
 							</Typography>
 						</Grid>
 						<Grid item>
-							<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
+							<Typography className={classes.author} color='textSecondary'>
 								{author}
 							</Typography>
 						</Grid>
 						<Grid item>
-							<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
+							<Typography className={classes.publisher} color='textSecondary'>
 								{publisher}
 							</Typography>
 						</Grid>
