@@ -10,6 +10,7 @@ import { BookCard } from './components/BookCard/BookCard'
 import { bookSearch } from './api/api'
 import useTheme from '@material-ui/core/styles/useTheme'
 import { useMediaQuery } from '@material-ui/core'
+import { onStopTyping } from './utils/onStopTyping'
 
 const useStyles = makeStyles((theme) => ({
 	'@global': {
@@ -40,38 +41,28 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-const onStopTyping = (time, fn) => {
-	function debounce(func, wait, immediate) {
-		let timeout
-		return function () {
-			let context = this, args = arguments
-			clearTimeout(timeout)
-			timeout = setTimeout(function () {
-				timeout = null
-				if (!immediate) func.apply(context, args)
-			}, wait)
-			if (immediate && !timeout) func.apply(context, args)
-		}
-	}
-
-	return debounce(fn, time)()
-}
-
 function App() {
 	const classes = useStyles()
 	const [title, setTitle] = useState('Professional JavaScript for Web Developers')
 	const [cardInfos, setCardInfos] = useState([])
+	const [loadingBooks, setLoadingBooks] = useState(false)
 
 	useEffect(() => {
-		// When the user stop typing an interval of time
-		onStopTyping(3000, () => {
-			console.log('calling')
+		onStopTyping(500, () => {
 			if (title) {
+				setLoadingBooks(true)
 				bookSearch(title)
 					.then(books => setCardInfos(books))
+					.then(() => setLoadingBooks(false))
 			}
 		})
 	}, [title])
+
+	// Start displaying info fast
+	useEffect(() => {
+		bookSearch(title)
+			.then(books => setCardInfos(books))
+	}, [])
 
 	const theme = useTheme()
 	const matchXS = useMediaQuery(theme.breakpoints.down('xs'))
@@ -92,7 +83,7 @@ function App() {
 					{
 						cardInfos.map((cardInfo, index) =>
 							<Grid item key={index}>
-								<BookCard cardInfo={cardInfo} />
+								<BookCard cardInfo={cardInfo} loadingBooks={loadingBooks}/>
 							</Grid>
 						)
 					}
