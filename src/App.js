@@ -22,6 +22,10 @@ const useStyles = makeStyles(theme => ({
 		height: '5em',
 		backgroundColor: 'white'
 	},
+	cardContainer: {
+		paddingTop: '1em',
+		paddingBottom: '1em',
+	},
 	bottomSeparation: {
 		height: '6em',
 	},
@@ -43,7 +47,20 @@ function App() {
 		author: 'Nicholas C. Zakas',
 		publisher: 'John Wiley & Sons',
 		thumbnail: 'http://books.google.com/books/content?id=C3kabcBG0ZsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
-	}])
+	},
+	{
+		title: 'Professional JavaScript for Web Developers',
+		author: 'Nicholas C. Zakas',
+		publisher: 'John Wiley & Sons',
+		thumbnail: 'http://books.google.com/books/content?id=Wmfr1Zp7d5EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+	},
+	{
+		title: 'Professional JavaScript for Web Developers',
+		author: 'Matt Frisbie',
+		publisher: 'John Wiley & Sons',
+		thumbnail: 'http://books.google.com/books/content?id=3GOuDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+	}
+	])
 
 	return (
 		<>
@@ -54,36 +71,41 @@ function App() {
 			</AppBar>
 			<div className={classes.bottomSeparation} />
 			<Container maxWidth='xs'>
-				<Card variant='outlined'>
-					<Grid container direction='row'>
-						<Grid item xs={4}>
-							<CardMedia
-								image={cardInfos[0].thumbnail}
-								title='thumbnail'
-								className={classes.thumbnailImage}
-							/>
-						</Grid>
-						<Grid item xs={8}>
-							<Grid container direction='column' justify='center' style={{height: '100%'}}>
-								<Grid item>
-									<Typography style={{ fontSize: '1rem' }}>
-										{cardInfos[0].title}
-									</Typography>
+				{
+					cardInfos.map(cardInfo => (
+						<Card variant='outlined' className={classes.cardContainer}>
+							<Grid container direction='row'>
+								<Grid item xs={4}>
+									<CardMedia
+										image={cardInfo.thumbnail}
+										title='thumbnail'
+										className={classes.thumbnailImage}
+									/>
 								</Grid>
-								<Grid item>
-									<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-										{cardInfos[0].author}
-									</Typography>
-								</Grid>
-								<Grid item>
-									<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
-										{cardInfos[0].publisher}
-									</Typography>
+								<Grid item xs={8}>
+									<Grid container direction='column' justify='center' style={{ height: '100%' }}>
+										<Grid item>
+											<Typography style={{ fontSize: '1rem' }}>
+												{cardInfo.title}
+											</Typography>
+										</Grid>
+										<Grid item>
+											<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
+												{cardInfo.author}
+											</Typography>
+										</Grid>
+										<Grid item>
+											<Typography style={{ fontSize: '0.8rem' }} color='textSecondary'>
+												{cardInfo.publisher}
+											</Typography>
+										</Grid>
+									</Grid>
 								</Grid>
 							</Grid>
-						</Grid>
-					</Grid>
-				</Card>
+						</Card>
+					))
+				}
+
 			</Container>
 		</>
 	)
