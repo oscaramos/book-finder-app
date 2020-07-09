@@ -4,13 +4,13 @@ import AppBar from '@material-ui/core/AppBar'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import useTheme from '@material-ui/core/styles/useTheme'
 import { makeStyles } from '@material-ui/core/styles'
 import { BookCard } from './components/BookCard/BookCard'
-
-import { bookSearch } from './api/api'
-import useTheme from '@material-ui/core/styles/useTheme'
 import { useMediaQuery } from '@material-ui/core'
+
 import onStopTyping from './utils/onStopTyping'
+import { bookSearch } from './api/api'
 
 const useStyles = makeStyles((theme) => ({
 	'@global': {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
 	const classes = useStyles()
-	const [title, setTitle] = useState('Professional JavaScript for Web Developers')
+	const [title, setTitle] = useState('La vuelta al mundo')
 	const [cardInfos, setCardInfos] = useState([])
 
 	useEffect(() => {
